@@ -4,7 +4,7 @@ class Project {
 
     Integer integradoId
     Integer parentId
-    Integer status
+    ProjectStatus status
     String name
     String description
 
@@ -14,7 +14,7 @@ class Project {
     static constraints = {
 	integradoId min:0,nullable:false
 	parentId min:0,nullable:false
-	status min:0,max:1,nullable:false
+	status nullable:false
         name blank:false,nullable:false,size:1..255
 	description blank:true,nullable:true,size:1..255
     }
