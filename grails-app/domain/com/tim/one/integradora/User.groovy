@@ -10,7 +10,7 @@ class User {
 
     static constraints = {
 	name blank:false,nullable:false,size:1..255
-	email blank:false,nullable:false,email:true,size:1..100	
+	email blank:false,nullable:false,email:true,unique:true,size:1..100	
     }
 
 }
