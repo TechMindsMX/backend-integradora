@@ -59,6 +59,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${userInstance?.projects}">
+				<li class="fieldcontain">
+					<span id="projects-label" class="property-label"><g:message code="user.projects.label" default="Projects" /></span>
+					
+						<g:each in="${userInstance.projects}" var="p">
+						<span class="property-value" aria-labelledby="projects-label"><g:link controller="project" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form url="[resource:userInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

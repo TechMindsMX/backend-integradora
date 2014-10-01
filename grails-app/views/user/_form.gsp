@@ -20,3 +20,21 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'projects', 'error')} ">
+	<label for="projects">
+		<g:message code="user.projects.label" default="Projects" />
+		
+	</label>
+	
+<ul class="one-to-many">
+<g:each in="${userInstance?.projects?}" var="p">
+    <li><g:link controller="project" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="project" action="create" params="['user.id': userInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'project.label', default: 'Project')])}</g:link>
+</li>
+</ul>
+
+
+</div>
+
