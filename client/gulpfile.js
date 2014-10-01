@@ -15,7 +15,7 @@ gulp.task('html', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./src/**/*.js'], ['html']);
+  gulp.watch(['./src/**/*.js', './src/test/*.html'], ['html']);
 });
 
 gulp.task('default', ['connect', 'watch']);
