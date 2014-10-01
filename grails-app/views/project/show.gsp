@@ -23,29 +23,11 @@
 			</g:if>
 			<ol class="property-list project">
 			
-				<g:if test="${projectInstance?.integradoId}">
+				<g:if test="${projectInstance?.parent}">
 				<li class="fieldcontain">
-					<span id="integradoId-label" class="property-label"><g:message code="project.integradoId.label" default="Integrado Id" /></span>
+					<span id="parent-label" class="property-label"><g:message code="project.parent.label" default="Parent" /></span>
 					
-						<span class="property-value" aria-labelledby="integradoId-label"><g:fieldValue bean="${projectInstance}" field="integradoId"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${projectInstance?.parentId}">
-				<li class="fieldcontain">
-					<span id="parentId-label" class="property-label"><g:message code="project.parentId.label" default="Parent Id" /></span>
-					
-						<span class="property-value" aria-labelledby="parentId-label"><g:fieldValue bean="${projectInstance}" field="parentId"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${projectInstance?.status}">
-				<li class="fieldcontain">
-					<span id="status-label" class="property-label"><g:message code="project.status.label" default="Status" /></span>
-					
-						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${projectInstance}" field="status"/></span>
+						<span class="property-value" aria-labelledby="parent-label"><g:link controller="project" action="show" id="${projectInstance?.parent?.id}">${projectInstance?.parent?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -82,6 +64,35 @@
 					<span id="lastUpdated-label" class="property-label"><g:message code="project.lastUpdated.label" default="Last Updated" /></span>
 					
 						<span class="property-value" aria-labelledby="lastUpdated-label"><g:formatDate date="${projectInstance?.lastUpdated}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${projectInstance?.status}">
+				<li class="fieldcontain">
+					<span id="status-label" class="property-label"><g:message code="project.status.label" default="Status" /></span>
+					
+						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${projectInstance}" field="status"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${projectInstance?.subProjects}">
+				<li class="fieldcontain">
+					<span id="subProjects-label" class="property-label"><g:message code="project.subProjects.label" default="Sub Projects" /></span>
+					
+						<g:each in="${projectInstance.subProjects}" var="s">
+						<span class="property-value" aria-labelledby="subProjects-label"><g:link controller="project" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${projectInstance?.user}">
+				<li class="fieldcontain">
+					<span id="user-label" class="property-label"><g:message code="project.user.label" default="User" /></span>
+					
+						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${projectInstance?.user?.id}">${projectInstance?.user?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
