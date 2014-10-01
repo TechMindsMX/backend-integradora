@@ -1,18 +1,17 @@
 function User() {
 
-  var list = null;
-
-  console.log("before");
-  $.getJSON('http://localhost:8090/tim-integradora/users.json', function(data) {
-    console.log("response");
-    list = data;
-  });
-  console.log("after");
-
   return {
     list: function() {
-      console.log("current");
-      return list;
+      var promise = new RSVP.Promise(function(resolve, reject) {
+        $.getJSON('http://localhost:8090/tim-integradora/users.json').
+        done(function(data) {
+          resolve([1,2,3,4]);
+        }).fail(function(error){
+          reject(error);
+        })
+      });
+
+      return promise;
     }
   }
 }

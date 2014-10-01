@@ -2,8 +2,12 @@ describe("Users behavior", function() {
 
   it("Should get an empty user list", function() {
     var user = new User();
-    var users = user.list();
-    expect(users).toEqual([]);
+    user.list().then(
+      function(data) {
+        console.log(data.length);
+        expect(10).toEqual(0);
+      }
+    );
   });
 
 });
