@@ -7,6 +7,7 @@ class User {
 
   String name
   String email
+  UserStatus status = UserStatus.ENABLED
 
   Date dateCreated
   Date lastUpdated
