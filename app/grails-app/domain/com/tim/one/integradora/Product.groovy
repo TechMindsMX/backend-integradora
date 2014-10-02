@@ -18,7 +18,6 @@ class Product {
   Date lastUpdated
 
   static belongsTo = [user:User]
-  static hasMany = [subProjects:Project]
 
   static constraints = {
     name blank:false,size:1..255
