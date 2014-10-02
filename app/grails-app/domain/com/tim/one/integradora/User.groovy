@@ -11,7 +11,7 @@ class User {
   Date dateCreated
   Date lastUpdated
 
-  static hasMany = [projects:Project]
+  static hasMany = [projects:Project, products:Product]
 
   static constraints = {
    name blank:false,nullable:false,size:1..255
