@@ -24,6 +24,21 @@ function User() {
       });
 
       return promise;
+    },
+    delete: function(user) {
+      var url = "http://localhost:8080/tim-integradora/users/" + user.id
+      var promise = new RSVP.Promise(function(resolve, reject) {
+        $.ajax({
+          method: "DELETE",
+          url:url
+        }).done(function(response, status) {
+          resolve(status);
+        }).fail(function(error){
+          reject(error);
+        })
+      });
+
+      return promise;
     }
   }
 }

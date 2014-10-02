@@ -1,11 +1,11 @@
 describe("Users behavior", function() {
+  var newUser = null;
 
   describe("Saving an user", function() {
-    var newUser = null;
-
     beforeEach(function(done) {
       var user = new User();
-      user.save({name: 'usuario', email: 'usuario6@email.com'}).then(
+      var useremail = new Date().getTime() + '@email.com'
+      user.save({name: 'usuario', email: useremail}).then(
         function(data) {
           newUser = data; // deserialize
           done();
@@ -29,11 +29,35 @@ describe("Users behavior", function() {
           list = data;
           done();
         }
-        );
+      );
     });
 
     it("Should get a list of all users", function(done) {
       expect(list.length).toBeGreaterThan(0);
+      done();
+    });
+  });
+
+  describe("Disable behavior", function() {
+    var newList = [new User()];
+
+    beforeEach(function(done) {
+      var user = new User();
+      user.delete(newUser).then(
+        function() {
+          user.list().then(
+            function(data) {
+              newList = data;
+              done();
+            }
+          );
+        }
+      );
+
+    });
+
+    it("Should disable an user", function(done) {
+      expect(newList).toEqual([]);
       done();
     });
   });
