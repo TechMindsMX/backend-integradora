@@ -1,16 +1,14 @@
 package com.tim.one.integradora
 
 import grails.transaction.Transactional
-import grails.rest.*
 
 class UserController {
 
   static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
 
-  def index(Integer max) {
-    params.max = Math.min(max ?: 10, 100)
+  def index() {
     render(contentType:"application/json", status:200) {
-      [users: User.findAllByStatus(UserStatus.ENABLED, params), total: User.count()]
+      [users: User.findAllByStatus(UserStatus.ENABLED)]
     }
   }
 
@@ -21,7 +19,9 @@ class UserController {
       return
     }
     user.save()
-    respond user
+    render(contentType:"application/json", status:201) {
+      user
+    }
   }
 
   @Transactional
@@ -30,6 +30,12 @@ class UserController {
     user.status = UserStatus.DISABLED
     user.save()
     render(status:202)
+  }
+
+  def show(Long id){
+    render(contentType:"application/json", status:200) {
+      User.findById(id)
+    }   
   }
 
 }
