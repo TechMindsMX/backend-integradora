@@ -9,7 +9,9 @@ class UserController {
 
   def index(Integer max) {
     params.max = Math.min(max ?: 10, 100)
-    respond User.findAllByStatus(UserStatus.ENABLED, params), model:[userCount: User.count()]
+    render(contentType:"application/json", status:200) {
+      [users: User.findAllByStatus(UserStatus.ENABLED, params), total: User.count()]
+    }
   }
 
   @Transactional

@@ -103,18 +103,6 @@ log4j.main = {
     debug 'myAppender'
   }
 
-  environments {
-    production {
-      error "grails",
-      "org",
-      "net",
-      "com",
-      "groovyx",
-      "net.bull.javamelody",
-      "httpclient"
-    }
-  }
-
   debug 'grails.app.controllers.com.tim.one.integradora',
         'grails.app.taglib.com.tim.one.integradora',
         'grails.app.services.com.tim.one.integradora',
@@ -153,4 +141,16 @@ log4j.main = {
         'grails.plugin.databasemigration',
         'grails.app.jobs',
         'grails.plugins.quartz'
+
+  environments {
+    production {
+      error "grails",
+      "org",
+      "net",
+      "com",
+      "groovyx",
+      "net.bull.javamelody",
+      "httpclient"
+    }
+  }
 }
