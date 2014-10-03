@@ -2,11 +2,10 @@ package com.tim.one.integradora
 
 import grails.rest.*
 
-@Resource(uri="/projects")
 class Project {
 
   Project parent
-  ProjectStatus status
+  ProjectStatus status = ProjectStatus.ENABLED
   String name
   String description
 
