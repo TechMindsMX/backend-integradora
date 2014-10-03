@@ -8,6 +8,7 @@ class UrlMappings {
 
     "/users"(resources:"user"){
       "/projects"(resources:"project")
+      "/products"(resources:"product")
     }
 
 
