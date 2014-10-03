@@ -3,7 +3,7 @@ function User() {
   return {
     list: function() {
       var promise = new RSVP.Promise(function(resolve, reject) {
-        $.getJSON('http://localhost:8080/tim-integradora/users.json').
+        $.getJSON('http://localhost:8080/tim-integradora/users').
         done(function(data) {
           resolve(data);
         }).fail(function(error){
@@ -15,7 +15,7 @@ function User() {
     },
     save: function(user) {
       var promise = new RSVP.Promise(function(resolve, reject) {
-        $.post('http://localhost:8080/tim-integradora/users?format=json', user).
+        $.post('http://localhost:8080/tim-integradora/users', user).
         done(function(data) {
           resolve(data);
         }).fail(function(error){
