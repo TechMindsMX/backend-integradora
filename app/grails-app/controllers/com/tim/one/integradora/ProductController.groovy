@@ -6,10 +6,26 @@ class ProductController {
 
   static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
 
-  def index() { 
+  def index() {
     User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    def products = Product.findAllByUserAndStatus(user, ProjectStatus.ENABLED)
+
+    if (params.name){
+      if (params.name.size() < 3){
+        returnNotFound(400, [text:"Minimum length violation"])
+        return
+      }
+      products = Product.findAllByUserAndStatusAndNameLike(user, ProjectStatus.ENABLED, "%${params.name}%")
+    }
+
     render(contentType:"application/json", status:200) {
-      Product.findAllByUserAndStatus(user, ProjectStatus.ENABLED)
+      products
+    }
+  }
+
+  def returnNotFound(status, errors){
+    render(contentType:"application/json", status:400) {
+      errors
     }
   }
 
@@ -20,10 +36,7 @@ class ProductController {
     product.validate()
 
     if(product.hasErrors()) {
-      render(contentType:"application/json", status:400) {
-        product.errors
-      }
-      return
+      returnNotFound(400, product.errors)
     }
 
     product.save()
