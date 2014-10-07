@@ -7,6 +7,7 @@ import spock.lang.Specification
 @Mock(Relationship)
 class UserSpec extends Specification {
 
+<<<<<<< HEAD
   def "user creation"() {
     given: "A new user"
       def user = new User(
@@ -57,6 +58,25 @@ class UserSpec extends Specification {
       providerName  | providerEmail        | relationshipType
       "provider"    | "email@provider.com" | RelationshipType.PROVIDER
       "provider"    | "email@provider.com" | RelationshipType.CLIENT
+  }
+
+  void "validating constraints"() {
+    setup:
+    def user = new User(
+      name : name,
+      email : email
+    )
+
+    when:
+      user.save()
+
+    then:
+      assert user.errors.allErrors*.code == expected
+
+     where:
+     name      | email                    ||  expected
+     null      | "josdem@trama.mx"        ||  ["nullable"]
+     "1" * 256 | "1" * 100 + "@trama.mx"  ||  ["size.toobig"] * 2
   }
 
 }
