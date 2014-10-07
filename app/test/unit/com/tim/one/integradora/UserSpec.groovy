@@ -27,16 +27,20 @@ class UserSpec extends Specification {
       "name1" | "name@email.com"
   }
 
-  def "Adding a provider to an existen user"() {
+  def "Adding a relation to an existing user"() {
     given: "An existing user"
       def user = new User(name: "name", email: "email@user.com")
       user.save()
 
     and: "Add an provider"
       def provider = new User(name:providerName, email:providerEmail)
+      provider.status = UserStatus.DISABLED
       provider.save()
+      println provider
 
-      def relationship = new Relationship(type:type, user:provider)
+      def relationship = new Relationship(user:provider)
+      relationship.type = relationshipType
+      relationship.user = provider
       user.addToRelationships(relationship)
 
     when:
@@ -46,11 +50,13 @@ class UserSpec extends Specification {
       userUpdated.id
       userUpdated.relationships.size() > 0
       userUpdated.relationships[0].id
+      userUpdated.relationships[0].type == relationshipType
+      userUpdated.relationships[0].user.status == UserStatus.DISABLED
 
     where:
-      providerName  | providerEmail        | type
+      providerName  | providerEmail        | relationshipType
       "provider"    | "email@provider.com" | RelationshipType.PROVIDER
-
+      "provider"    | "email@provider.com" | RelationshipType.CLIENT
   }
 
 }

@@ -2,7 +2,7 @@ package com.tim.one.integradora
 
 class Relationship {
 
-  RelationshipType relationship = RelationshipType.PROVIDER
+  RelationshipType type
   User user
 
   static constraints = {
