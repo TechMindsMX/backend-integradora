@@ -7,7 +7,6 @@ import spock.lang.Specification
 @Mock(Relationship)
 class UserSpec extends Specification {
 
-<<<<<<< HEAD
   def "user creation"() {
     given: "A new user"
       def user = new User(
@@ -34,14 +33,10 @@ class UserSpec extends Specification {
       user.save()
 
     and: "Add an provider"
-      def provider = new User(name:providerName, email:providerEmail)
-      provider.status = UserStatus.DISABLED
+      def provider = new User(name:providerName, email:providerEmail, status: UserStatus.DISABLED)
       provider.save()
-      println provider
 
-      def relationship = new Relationship(user:provider)
-      relationship.type = relationshipType
-      relationship.user = provider
+      def relationship = new Relationship(user: provider, type: relationshipType)
       user.addToRelationships(relationship)
 
     when:
@@ -50,14 +45,13 @@ class UserSpec extends Specification {
     then:
       userUpdated.id
       userUpdated.relationships.size() > 0
-      userUpdated.relationships[0].id
       userUpdated.relationships[0].type == relationshipType
       userUpdated.relationships[0].user.status == UserStatus.DISABLED
 
     where:
       providerName  | providerEmail        | relationshipType
       "provider"    | "email@provider.com" | RelationshipType.PROVIDER
-      "provider"    | "email@provider.com" | RelationshipType.CLIENT
+      "client"      | "email@client.com"   | RelationshipType.CLIENT
   }
 
   void "validating constraints"() {
