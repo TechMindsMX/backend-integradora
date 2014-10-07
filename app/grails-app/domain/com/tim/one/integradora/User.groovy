@@ -1,17 +1,16 @@
 package com.tim.one.integradora
 
-import grails.rest.*
-
 class User {
 
   String name
   String email
+  //TODO: cambiar por enabled
   UserStatus status = UserStatus.ENABLED
 
   Date dateCreated
   Date lastUpdated
 
-  static hasMany = [projects:Project, products:Product]
+  static hasMany = [projects:Project, products:Product, relationships:Relationship]
 
   static constraints = {
    name blank:false,nullable:false,size:1..255
