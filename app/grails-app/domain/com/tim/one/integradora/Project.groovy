@@ -5,9 +5,9 @@ import grails.rest.*
 class Project {
 
   Project parent
-  ProjectStatus status = ProjectStatus.ENABLED
   String name
   String description
+  ProjectStatus status = ProjectStatus.ENABLED
 
   Date dateCreated    
   Date lastUpdated
@@ -17,7 +17,7 @@ class Project {
 
   static constraints = {
     parent nullable:true
-    name blank:false,nullable:false,size:1..255
+    name blank:false,size:1..255
     description blank:true,nullable:true,size:1..255
   }
 

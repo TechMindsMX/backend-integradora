@@ -7,14 +7,26 @@ import spock.lang.Specification
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
 @TestFor(Project)
+@Mock(User)
 class ProjectSpec extends Specification {
 
-    def setup() {
-    }
+    void "validating constraints"() {
+      setup:
+      def project = new Project(
+        name : name,
+        description : description,
+        user: new User()
+      )
 
-    def cleanup() {
-    }
+      when:
+        project.save()
 
-    void "test something"() {
+      then:
+        assert project.errors.allErrors*.code == expected
+
+      where:
+       name               | description   ||  expected
+       null               | null          ||  ["nullable"] 
+       "1" * 256          | "1" * 256     ||  ["size.toobig"] * 2
     }
 }

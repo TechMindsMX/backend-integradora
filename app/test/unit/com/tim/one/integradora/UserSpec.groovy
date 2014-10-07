@@ -9,12 +9,23 @@ import spock.lang.Specification
 @TestFor(User)
 class UserSpec extends Specification {
 
-    def setup() {
+    void "validating constraints"() {
+      setup:
+      def user = new User(
+        name : name,
+        email : email
+      )
+
+      when:
+        user.save()
+
+      then:
+        assert user.errors.allErrors*.code == expected
+
+       where:
+       name      | email                    ||  expected
+       null      | "josdem@trama.mx"        ||  ["nullable"]
+       "1" * 256 | "1" * 100 + "@trama.mx"  ||  ["size.toobig"] * 2
     }
 
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
 }

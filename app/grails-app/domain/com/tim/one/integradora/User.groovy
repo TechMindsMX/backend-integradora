@@ -14,8 +14,8 @@ class User {
   static hasMany = [projects:Project, products:Product]
 
   static constraints = {
-   name blank:false,nullable:false,size:1..255
-   email blank:false,nullable:false,email:true,unique:true,size:1..100
+   name blank:false,size:1..255
+   email email:true,unique:true,size:1..100
  }
 
 }
