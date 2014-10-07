@@ -54,6 +54,36 @@ class UserSpec extends Specification {
       "client"      | "email@client.com"   | RelationshipType.CLIENT
   }
 
+
+  def "Enable provider/client as an user"() {
+    given: "An existing user"
+      def user = new User(name: "name", email: "email@user.com")
+      user.save()
+
+    and: "Add an existing provider"
+      def provider = new User(name:providerName, email:providerEmail, status: UserStatus.DISABLED)
+      provider.save()
+
+      def relationship = new Relationship(user: provider, type: relationshipType)
+      relationship.save()
+      user.addToRelationships(relationship)
+      user.save()
+
+    and: "Enabling a provider"
+      provider.status = UserStatus.ENABLED
+
+    when:
+      def providerUpdated = provider.save()
+
+    then:
+      providerUpdated.status == UserStatus.ENABLED
+      !providerUpdated.relationships.isEmpty()
+
+    where:
+      providerName  | providerEmail        | relationshipType
+      "provider"    | "email@provider.com" | RelationshipType.PROVIDER
+  }
+
   void "validating constraints"() {
     setup:
     def user = new User(
