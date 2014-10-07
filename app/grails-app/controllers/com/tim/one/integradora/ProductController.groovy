@@ -32,6 +32,7 @@ class ProductController {
   }
 
   @Transactional
+  //TODO: Crear command para el product sin el user
   def save(Product product) {
     User user = User.get(params.userId)
     product.user = user
