@@ -12,7 +12,7 @@ class RelationshipController {
   def index() {
     def relationships = relationshipService.obtainRelationshipsForIntegrated(params.long("userId"))
 
-    render(contentType:'application/json', status:CREATED) {
+    render(contentType:'application/json', status:OK) {
       relationships
     }
   }
