@@ -16,10 +16,10 @@ class User {
   static hasMany = [projects:Project, products:Product, relationships:Relationship]
 
   static constraints = {
-   name blank:false,size:1..255
-   email email:true,unique:true,size:1..100
-   rfc blank:false, size:12..13
-   profile nullable:true
- }
+    name blank:false,size:1..255
+    email email:true,unique:true,size:1..100
+    rfc blank:false, size:12..13
+    profile nullable:true
+  }
 
 }
