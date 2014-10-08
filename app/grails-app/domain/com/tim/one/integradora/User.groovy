@@ -1,21 +1,25 @@
 package com.tim.one.integradora
 
-import grails.rest.*
-
 class User {
 
   String name
   String email
-  UserStatus status = UserStatus.ENABLED
+  String rfc
+
+  boolean enabled = true
+
+  Profile profile
 
   Date dateCreated
   Date lastUpdated
 
-  static hasMany = [projects:Project, products:Product]
+  static hasMany = [projects:Project, products:Product, relationships:Relationship]
 
   static constraints = {
-   name blank:false,nullable:false,size:1..255
-   email blank:false,nullable:false,email:true,unique:true,size:1..100
+   name blank:false,size:1..255
+   email email:true,unique:true,size:1..100
+   rfc blank:false, size:12..13
+   profile nullable:true
  }
 
 }

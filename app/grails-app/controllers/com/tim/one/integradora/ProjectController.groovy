@@ -7,7 +7,7 @@ class ProjectController {
   static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
 
   def index() { 
-    User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    User user = User.findByIdAndEnabled(params.userId, true)
     render(contentType:"application/json", status:200) {
       Project.findAllByUserAndStatus(user, ProjectStatus.ENABLED)
     }
@@ -34,7 +34,7 @@ class ProjectController {
 
   @Transactional
   def delete(Long id) {
-    User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    User user = User.findByIdAndEnabled(params.userId, true)
     if (!user){
       render(status:404)
       return
@@ -46,7 +46,7 @@ class ProjectController {
   }
 
   def show(Long id){
-    User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    User user = User.findByIdAndEnabled(params.userId, true)
     render(contentType:"application/json", status:200) {
       Project.findByIdAndUserAndStatus(id, user, ProjectStatus.ENABLED)
     }

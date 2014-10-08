@@ -8,7 +8,7 @@ class UserController {
 
   def index() {
     render(contentType:"application/json", status:200) {
-      [users: User.findAllByStatus(UserStatus.ENABLED)]
+      [users: User.findAllByEnabled(true)]
     }
   }
 
@@ -27,14 +27,14 @@ class UserController {
   @Transactional
   def delete(Long id) {
     User user = User.get(id)
-    user.status = UserStatus.DISABLED
+    user.enabled = false
     user.save()
     render(status:202)
   }
 
   def show(Long id){
     render(contentType:"application/json", status:200) {
-      User.findById(id)
+      User.findByIdAndEnabled(id, true)
     }   
   }
 
