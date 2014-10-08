@@ -8,8 +8,7 @@ class UserService {
   def addRelationshipToIntegrated(integratedId, params) {
     def integrated = User.get(integratedId)
 
-    def provider = User.findOrCreateByEmail(params.email)
-    provider.properties = params
+    def provider = findOrCreateProviderWithProfile(params)
 
     def relationship = new Relationship(type:params.relationshipType)
     relationship.addToUsers(integrated)
@@ -17,5 +16,20 @@ class UserService {
     provider.save()
 
     integrated
+  }
+
+  def findOrCreateProviderWithProfile(params) {
+    def provider = User.findOrCreateByEmail(params.email)
+    provider.properties = params
+
+    if(!provider.profile) {
+      def profile = new Profile()
+      profile.properties = params
+      profile.save()
+
+      provider.profile = profile
+    }
+
+    provider
   }
 }

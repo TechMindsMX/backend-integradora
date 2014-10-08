@@ -4,7 +4,7 @@ import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 @TestFor(UserService)
-@Mock([User, Relationship])
+@Mock([User, Relationship, Profile])
 class UserServiceSpec extends Specification {
 
   def "Adding a relation to an existing user"() {
@@ -13,9 +13,6 @@ class UserServiceSpec extends Specification {
         name: "name",
         email: "email@user.com",
         rfc: "123456789012",
-        tradeName: "tradeName",
-        corporateName: "corporateName",
-        phone: "1234567890",
       )
       integrated.save()
 
@@ -40,6 +37,8 @@ class UserServiceSpec extends Specification {
       user.relationships[0].type == relationshipType
       user.relationships[0].users.size() == 2
       user.relationships[0].users*.enabled == [true, false]
+      user.relationships[0].users.find { !it.enabled }.profile.id
+      user.relationships[0].users.find { !it.enabled }.profile.tradeName == providerTradeName
 
     where:
       providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
@@ -52,23 +51,23 @@ class UserServiceSpec extends Specification {
       def integrated = new User(
         name: "name",
         email: "email@user.com",
-        rfc: "123456789012",
-        tradeName: "tradeName",
-        corporateName: "corporateName",
-        phone: "1234567890",
-        enabled:true
+        rfc: "123456789012"
       )
       integrated.save()
 
     and: "Client/provider"
+      def profile = new Profile(
+        tradeName: providerTradeName,
+        corporateName: providerCorporateName,
+        phone: providerPhone,
+      )
+      profile.save()
       def provider = new User(
         name: providerName,
         email: providerEmail,
         rfc: providerRfc,
-        tradeName: providerTradeName,
-        corporateName: providerCorporateName,
-        phone: providerPhone,
         enabled: false,
+        profile:profile,
         relationshipType: relationshipType
       )
       provider.save()
@@ -91,6 +90,7 @@ class UserServiceSpec extends Specification {
 
       provider.relationships.size() == 1
       provider.relationships[0].id == user.relationships[0].id
+      provider.profile == profile
 
     where:
       providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
@@ -107,7 +107,6 @@ class UserServiceSpec extends Specification {
         tradeName: "tradeName",
         corporateName: "corporateName",
         phone: "1234567890",
-        enabled:true
       )
       integrated.save()
 
