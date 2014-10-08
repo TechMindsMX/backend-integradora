@@ -11,7 +11,11 @@ class UserServiceSpec extends Specification {
     given: "An existing user"
       def integrated = new User(
         name: "name",
-        email: "email@user.com"
+        email: "email@user.com",
+        rfc: "123456789012",
+        tradeName: "tradeName",
+        corporateName: "corporateName",
+        phone: "1234567890",
       )
       integrated.save()
 
@@ -19,6 +23,10 @@ class UserServiceSpec extends Specification {
       def params = [
         name: providerName,
         email: providerEmail,
+        rfc: providerRfc,
+        tradeName: providerTradeName,
+        corporateName: providerCorporateName,
+        phone: providerPhone,
         enabled: false,
         relationshipType: relationshipType
       ]
@@ -34,9 +42,9 @@ class UserServiceSpec extends Specification {
       user.relationships[0].users*.enabled == [true, false]
 
     where:
-      providerName  | providerEmail        | relationshipType
-      "provider"    | "email@provider.com" | RelationshipType.PROVIDER
-      "client"      | "email@client.com"   | RelationshipType.CLIENT
+      providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
+      "provider"    | "email@provider.com" | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.PROVIDER
+      "client"      | "email@client.com"   | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.CLIENT
   }
 
   def "Adding a relation between an integrated and a disabled user"() {
@@ -44,6 +52,10 @@ class UserServiceSpec extends Specification {
       def integrated = new User(
         name: "name",
         email: "email@user.com",
+        rfc: "123456789012",
+        tradeName: "tradeName",
+        corporateName: "corporateName",
+        phone: "1234567890",
         enabled:true
       )
       integrated.save()
@@ -52,7 +64,12 @@ class UserServiceSpec extends Specification {
       def provider = new User(
         name: providerName,
         email: providerEmail,
-        enabled:false
+        rfc: providerRfc,
+        tradeName: providerTradeName,
+        corporateName: providerCorporateName,
+        phone: providerPhone,
+        enabled: false,
+        relationshipType: relationshipType
       )
       provider.save()
 
@@ -76,9 +93,9 @@ class UserServiceSpec extends Specification {
       provider.relationships[0].id == user.relationships[0].id
 
     where:
-      providerName  | providerEmail        | relationshipType
-      "provider"    | "email@provider.com" | RelationshipType.PROVIDER
-      "client"      | "email@client.com"   | RelationshipType.CLIENT
+      providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
+      "provider"    | "email@provider.com" | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.PROVIDER
+      "client"      | "email@client.com"   | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.CLIENT
   }
 
   def "Adding a new relationship to a user with other provider"() {
@@ -86,6 +103,10 @@ class UserServiceSpec extends Specification {
       def integrated = new User(
         name: "name",
         email: "email@user.com",
+        rfc: "123456789012",
+        tradeName: "tradeName",
+        corporateName: "corporateName",
+        phone: "1234567890",
         enabled:true
       )
       integrated.save()
@@ -107,6 +128,10 @@ class UserServiceSpec extends Specification {
       def params = [
         name: providerName,
         email: providerEmail,
+        rfc: providerRfc,
+        tradeName: providerTradeName,
+        corporateName: providerCorporateName,
+        phone: providerPhone,
         enabled: false,
         relationshipType: relationshipType
       ]
@@ -121,9 +146,9 @@ class UserServiceSpec extends Specification {
       provider.relationships.size() == 1
 
     where:
-      providerName  | providerEmail        | relationshipType
-      "provider"    | "email@provider.com" | RelationshipType.PROVIDER
-      "client"      | "email@client.com"   | RelationshipType.CLIENT
+      providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
+      "provider"    | "email@provider.com" | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.PROVIDER
+      "client"      | "email@client.com"   | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.CLIENT
   }
 
 
