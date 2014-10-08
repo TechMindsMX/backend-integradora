@@ -3,6 +3,7 @@ package com.tim.one.integradora
 import grails.transaction.Transactional
 
 @Transactional
+//TODO refactor de tooooda la clase
 class RelationshipService {
 
   def createRelatioshipForIntegatedAndPartner(integratedId, params) {
