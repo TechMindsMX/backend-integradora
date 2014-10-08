@@ -29,7 +29,6 @@ class RelationshipService {
       data.type = relationship.type.toString()
 
       def partner = relationship.users.find { it.id != integratedId }
-      data.id = partner.id
       data.rfc = partner.rfc
       data.email = partner.email
       data.enabled = partner.enabled
