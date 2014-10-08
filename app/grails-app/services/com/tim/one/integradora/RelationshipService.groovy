@@ -43,6 +43,31 @@ class RelationshipService {
     relationships
   }
 
+  def obtainRelationshipForIntegratedWithId(integratedId, relationId) {
+    def relationship = Relationship.get(relationId)
+    def belongsToIntegrated = relationship.users.find { it.id == integratedId }
+
+    if(!belongsToIntegrated) {
+      return
+    }
+
+    def partner = relationship.users.find { it.id != integratedId }
+
+    def data = [:]
+    data.id = relationship.id
+    data.type = relationship.type.toString()
+
+    data.rfc = partner.rfc
+    data.email = partner.email
+    data.enabled = partner.enabled
+    data.name = partner.name
+    data.tradeName = partner.profile.tradeName
+    data.corporateName = partner.profile.corporateName
+    data.phone = partner.profile.phone
+
+    data
+  }
+
   private def findOrCreatePartnerWithProfile(params) {
     def partner = User.findOrCreateByEmail(params.email)
     partner.properties = params
