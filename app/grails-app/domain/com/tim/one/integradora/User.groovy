@@ -4,8 +4,7 @@ class User {
 
   String name
   String email
-  //TODO: cambiar por enabled
-  UserStatus status = UserStatus.ENABLED
+  boolean enabled = true
 
   Date dateCreated
   Date lastUpdated
