@@ -8,7 +8,7 @@ class ProductController {
   static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
 
   def index(IndexValidationCommand validationCommand) {
-    User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    User user = User.findByIdAndEnabled(params.userId, true)
     def products = Product.findAllByUserAndStatus(user, ProjectStatus.ENABLED)
 
     if (validationCommand.hasErrors()){
@@ -17,7 +17,7 @@ class ProductController {
     }
 
     if(validationCommand.name) {
-      products = Product.findAllByUserAndStatusAndNameLike(user, ProjectStatus.ENABLED, "%${params.name}%")
+      products = Product.findAllByUserAndEnabledAndNameLike(user, true, "%${params.name}%")
     }
 
     render(contentType:"application/json", status:OK) {
@@ -50,7 +50,7 @@ class ProductController {
 
   @Transactional
   def delete(Long id) {
-    User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    User user = User.findByIdAndEnabled(params.userId, true)
     if (!user){
       renderCodeErrorWithMessage(BAD_REQUEST, [errors:[message:'URL Malformed']])
       return
@@ -62,7 +62,7 @@ class ProductController {
   }
 
   def show(Long id){
-    User user = User.findByIdAndStatus(params.userId, UserStatus.ENABLED)
+    User user = User.findByIdAndEnabled(params.userId, true)
     render(contentType:"application/json", status:OK) {
       Product.findByIdAndUserAndStatus(id, user, ProjectStatus.ENABLED)
     }
