@@ -7,7 +7,7 @@ class RelationshipController {
 
   static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
 
-  def userService
+  def relationshipService
 
   def index() {
     log.debug "Relationships"
@@ -21,7 +21,7 @@ class RelationshipController {
       return
     }
 
-    userService.addRelationshipToIntegrated(params.userId, command)
+    def user = relationshipService.addRelationshipToIntegrated(params.userId, command)
 
     render status:CREATED
   }

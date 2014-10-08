@@ -3,9 +3,9 @@ package com.tim.one.integradora
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-@TestFor(UserService)
+@TestFor(RelationshipService)
 @Mock([User, Relationship, Profile])
-class UserServiceSpec extends Specification {
+class RelationshipServiceSpec extends Specification {
 
   def "Adding a relation to an existing user"() {
     given: "An existing user"
@@ -29,16 +29,15 @@ class UserServiceSpec extends Specification {
       ]
 
     when:
-      def user = service.addRelationshipToIntegrated(integrated.id, params)
+      def relationship = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
 
     then:
-      user.id
-      user.relationships.size() == 1
-      user.relationships[0].type == relationshipType
-      user.relationships[0].users.size() == 2
-      user.relationships[0].users*.enabled == [true, false]
-      user.relationships[0].users.find { !it.enabled }.profile.id
-      user.relationships[0].users.find { !it.enabled }.profile.tradeName == providerTradeName
+      relationship.id
+      relationship.type == relationshipType
+      relationship.users.size() == 2
+      relationship.users*.enabled == [true, false]
+      relationship.users.find { !it.enabled }.profile.id
+      relationship.users.find { !it.enabled }.profile.tradeName == providerTradeName
 
     where:
       providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
@@ -79,17 +78,16 @@ class UserServiceSpec extends Specification {
       ]
 
     when:
-      def user = service.addRelationshipToIntegrated(integrated.id, params)
+      def relationship = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
 
     then:
-      user.id
-      user.relationships.size() == 1
-      user.relationships[0].type == relationshipType
-      user.relationships[0].users.size() == 2
-      user.relationships[0].users*.enabled == [true, false]
+      relationship.id
+      relationship.type == relationshipType
+      relationship.users.size() == 2
+      relationship.users*.enabled == [true, false]
 
       provider.relationships.size() == 1
-      provider.relationships[0].id == user.relationships[0].id
+      provider.relationships[0].id == relationship.id
       provider.profile == profile
 
     where:
@@ -136,11 +134,11 @@ class UserServiceSpec extends Specification {
       ]
 
     when:
-      def user = service.addRelationshipToIntegrated(integrated.id, params)
+      def newRelationship = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
 
     then:
-      user.id
-      user.relationships.size() == 2
+      newRelationship.id
+      newRelationship.users.size() == 2
 
       provider.relationships.size() == 1
 
@@ -149,6 +147,4 @@ class UserServiceSpec extends Specification {
       "provider"    | "email@provider.com" | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.PROVIDER
       "client"      | "email@client.com"   | "1" *12     | "tradeName"       | "corporateName"       | "1" * 10      | RelationshipType.CLIENT
   }
-
-
 }
