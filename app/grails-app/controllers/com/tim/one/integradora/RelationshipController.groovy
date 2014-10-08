@@ -10,8 +10,11 @@ class RelationshipController {
   def relationshipService
 
   def index() {
-    log.debug "Relationships"
-    render status:OK
+    def relationships = relationshipService.obtainRelationshipsForIntegrated(params.long("userId"))
+
+    render(contentType:'application/json', status:CREATED) {
+      relationships
+    }
   }
 
   @Transactional

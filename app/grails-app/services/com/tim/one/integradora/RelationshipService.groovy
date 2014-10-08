@@ -19,7 +19,22 @@ class RelationshipService {
     result
   }
 
-  def findOrCreatePartnerWithProfile(params) {
+  def obtainRelationshipsForIntegrated(integratedId) {
+    def user = User.findByIdAndEnabled(integratedId, true)
+    def relationships = []
+
+    user.relationships.each { relationship ->
+      def data = [:]
+      data.id = relationship.id
+      data.type = relationship.type
+      data.user = relationship.users.find { it.id != integratedId }
+      relationships << data
+    }
+
+    relationships
+  }
+
+  private def findOrCreatePartnerWithProfile(params) {
     def partner = User.findOrCreateByEmail(params.email)
     partner.properties = params
 
