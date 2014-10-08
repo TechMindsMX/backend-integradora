@@ -25,7 +25,7 @@ class UserServiceSpec extends Specification {
         corporateName: providerCorporateName,
         phone: providerPhone,
         enabled: false,
-        relationshipType: relationshipType
+        type: relationshipType
       ]
 
     when:
@@ -68,14 +68,14 @@ class UserServiceSpec extends Specification {
         rfc: providerRfc,
         enabled: false,
         profile:profile,
-        relationshipType: relationshipType
+        type: relationshipType
       )
       provider.save()
 
     and: "given params"
       def params = [
         email: providerEmail,
-        relationshipType: relationshipType
+        type: relationshipType
       ]
 
     when:
@@ -132,7 +132,7 @@ class UserServiceSpec extends Specification {
         corporateName: providerCorporateName,
         phone: providerPhone,
         enabled: false,
-        relationshipType: relationshipType
+        type: relationshipType
       ]
 
     when:

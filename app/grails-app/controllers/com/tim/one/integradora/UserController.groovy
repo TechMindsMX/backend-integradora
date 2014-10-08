@@ -34,7 +34,7 @@ class UserController {
 
   def show(Long id){
     render(contentType:"application/json", status:200) {
-      User.findById(id)
+      User.findByIdAndEnabled(id, true)
     }   
   }
 

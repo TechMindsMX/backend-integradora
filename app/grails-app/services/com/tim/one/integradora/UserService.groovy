@@ -7,10 +7,9 @@ class UserService {
 
   def addRelationshipToIntegrated(integratedId, params) {
     def integrated = User.get(integratedId)
-
     def provider = findOrCreateProviderWithProfile(params)
 
-    def relationship = new Relationship(type:params.relationshipType)
+    def relationship = new Relationship(type:params.type)
     relationship.addToUsers(integrated)
     provider.addToRelationships(relationship)
     provider.save()
