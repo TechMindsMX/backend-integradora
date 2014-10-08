@@ -15,7 +15,8 @@ class RelationshipService {
     partner.addToRelationships(relationship)
     partner.save()
 
-    relationship
+    def result = [ integrated: integrated, partner: partner, relationship: relationship ]
+    result
   }
 
   def findOrCreatePartnerWithProfile(params) {
