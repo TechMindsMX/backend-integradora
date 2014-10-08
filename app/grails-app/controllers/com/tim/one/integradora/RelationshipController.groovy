@@ -21,9 +21,11 @@ class RelationshipController {
       return
     }
 
-    def user = relationshipService.addRelationshipToIntegrated(params.userId, command)
+    def relationship = relationshipService.createRelatioshipForIntegatedAndPartner(params.userId, command)
 
-    render status:CREATED
+    render(contentType:'application/json', status:CREATED) {
+      relationship
+    }
   }
 
 }
