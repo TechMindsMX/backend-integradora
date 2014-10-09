@@ -5,6 +5,7 @@ gulp.task('connect', function() {
   connect.server({
     root: './',
     port: 8091,
+    fallback: 'src/test/results.html',
     livereload: true
   });
 });

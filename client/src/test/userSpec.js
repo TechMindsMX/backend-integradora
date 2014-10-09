@@ -3,9 +3,14 @@ describe("Users behavior", function() {
 
   describe("Saving an user", function() {
     beforeEach(function(done) {
-      var user = new User();
       var useremail = new Date().getTime() + '@email.com'
-      user.save({name: 'usuario', email: useremail}).then(
+      var user = new User({
+        name: 'usuario',
+        email: useremail,
+        rfc: "0123456789012"
+      });
+
+      user.save().then(
         function(data) {
           newUser = data; // deserialize
           done();
@@ -15,7 +20,39 @@ describe("Users behavior", function() {
 
     it("Should create an user", function(done) {
       expect(newUser).not.toBe(null);
+      expect(Object.keys(newUser).length).toEqual(8);
+      expect(newUser.hasOwnProperty('id')).toBe(true);
+      expect(newUser.hasOwnProperty('email')).toBe(true);
+      expect(newUser.hasOwnProperty('enabled')).toBe(true);
+      expect(newUser.hasOwnProperty('name')).toBe(true);
+      expect(newUser.hasOwnProperty('rfc')).toBe(true);
+      expect(newUser.hasOwnProperty('id')).toBe(true);
       done();
+    });
+
+
+    describe("Project behavior", function() {
+      var newProject = {};
+
+      beforeEach(function(done) {
+        var project = new Project({
+          name: "project name",
+          user: newUser
+        });
+
+        project.save().then(
+          function(data) {
+            console.log("new project");
+            newProject = data;
+            done();
+          }
+        );
+      });
+
+      it("Should create a project for a user", function(done) {
+        expect(newProject).not.toBe(null);
+        done();
+      });
     });
   });
 
@@ -26,7 +63,7 @@ describe("Users behavior", function() {
       var user = new User();
       user.list().then(
         function(data) {
-          list = data;
+          list = data.users;
           done();
         }
       );
@@ -47,7 +84,7 @@ describe("Users behavior", function() {
         function() {
           user.list().then(
             function(data) {
-              newList = data;
+              newList = data.users;
               done();
             }
           );
