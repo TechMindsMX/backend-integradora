@@ -6,6 +6,7 @@ class Ticket {
   String observations
   String attachmentUrl
   BigInteger orderNumber // auto-increment per integrated
+                         //esto no esta en la orden de compra asi que se debe quitar para usar esta tabla como base para las ordenes
 
   User integrated
 
