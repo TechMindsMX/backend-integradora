@@ -31,6 +31,14 @@ class RelationshipController {
     }
   }
 
+  def show() {
+    def relationship = relationshipService.obtainRelationshipForIntegratedWithId(params.long("userId"), params.long('id'))
+
+    render(contentType:'application/json', status:OK) {
+      relationship
+    }
+  }
+
 }
 
 class RelationshipCommand {
