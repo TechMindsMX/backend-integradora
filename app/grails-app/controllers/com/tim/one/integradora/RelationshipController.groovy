@@ -5,7 +5,7 @@ import static org.springframework.http.HttpStatus.*
 
 class RelationshipController {
 
-  static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
+  static allowedMethods = [index:'GET', show:'GET', save:'POST']
 
   def relationshipService
 
