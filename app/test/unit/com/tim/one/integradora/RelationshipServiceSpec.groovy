@@ -29,15 +29,15 @@ class RelationshipServiceSpec extends Specification {
       ]
 
     when:
-      def relationship = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
+      def results = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
 
     then:
-      relationship.id
-      relationship.type == relationshipType
-      relationship.users.size() == 2
-      relationship.users*.enabled == [true, false]
-      relationship.users.find { !it.enabled }.profile.id
-      relationship.users.find { !it.enabled }.profile.tradeName == providerTradeName
+      results.relationship.id
+      results.relationship.type == relationshipType
+      results.relationship.users.size() == 2
+      results.relationship.users*.enabled == [true, false]
+      results.relationship.users.find { !it.enabled }.profile.id
+      results.relationship.users.find { !it.enabled }.profile.tradeName == providerTradeName
 
     where:
       providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
@@ -78,17 +78,17 @@ class RelationshipServiceSpec extends Specification {
       ]
 
     when:
-      def relationship = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
+      def results = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
 
     then:
-      relationship.id
-      relationship.type == relationshipType
-      relationship.users.size() == 2
-      relationship.users*.enabled == [true, false]
+      results.relationship.id
+      results.relationship.type == relationshipType
+      results.relationship.users.size() == 2
+      results.relationship.users*.enabled == [true, false]
 
-      provider.relationships.size() == 1
-      provider.relationships[0].id == relationship.id
-      provider.profile == profile
+      results.partner.relationships.size() == 1
+      results.partner.relationships[0].id == results.relationship.id
+      results.partner.profile == profile
 
     where:
       providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
@@ -134,13 +134,13 @@ class RelationshipServiceSpec extends Specification {
       ]
 
     when:
-      def newRelationship = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
+      def results = service.createRelatioshipForIntegatedAndPartner(integrated.id, params)
 
     then:
-      newRelationship.id
-      newRelationship.users.size() == 2
+      results.relationship.id
+      results.relationship.users.size() == 2
 
-      provider.relationships.size() == 1
+      results.partner.relationships.size() == 1
 
     where:
       providerName  | providerEmail        | providerRfc | providerTradeName | providerCorporateName | providerPhone | relationshipType
