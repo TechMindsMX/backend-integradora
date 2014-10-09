@@ -6,7 +6,7 @@ class ProjectController {
 
   static allowedMethods = [index:'GET', save:'POST', delete:'DELETE']
 
-  def index() { 
+  def index() {
     User user = User.findByIdAndEnabled(params.userId, true)
     render(contentType:"application/json", status:200) {
       Project.findAllByUserAndStatus(user, ProjectStatus.ENABLED)

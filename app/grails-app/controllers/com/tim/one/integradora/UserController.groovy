@@ -1,5 +1,6 @@
 package com.tim.one.integradora
 
+import grails.converters.JSON
 import grails.transaction.Transactional
 
 class UserController {
@@ -19,8 +20,11 @@ class UserController {
       return
     }
     user.save()
-    render(contentType:"application/json", status:201) {
-      user
+
+    JSON.use('user') {
+      render(contentType:"application/json", status:201) {
+        user
+      }
     }
   }
 
@@ -35,7 +39,7 @@ class UserController {
   def show(Long id){
     render(contentType:"application/json", status:200) {
       User.findByIdAndEnabled(id, true)
-    }   
+    }
   }
 
 }
