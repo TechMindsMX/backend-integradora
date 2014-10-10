@@ -12,12 +12,9 @@ class DepositTicketService {
 
     DepositTicket depositTicket = new DepositTicket(commandData.properties)
     depositTicket.ticket = ticket
-    depositTicket.user = user
     depositTicket.orderNumber = calculateOrderNumberForUser(user)
+    depositTicket.user = user
     depositTicket.save()
-
-    // user.addToDepositTickets(depositTicket)
-    // user.save()
 
     depositTicket
   }
