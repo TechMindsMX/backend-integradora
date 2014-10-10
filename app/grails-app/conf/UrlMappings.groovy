@@ -10,6 +10,7 @@ class UrlMappings {
       "/projects"(resources:"project")
       "/products"(resources:"product")
       "/relationships"(resources:"relationship")
+      "/depositTickets"(resources:"depositTicket")
     }
 
 
