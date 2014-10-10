@@ -15,7 +15,7 @@ class Product {
   BigDecimal iva
   BigDecimal ieps
 
-  Date dateCreated    
+  Date dateCreated
   Date lastUpdated
 
   static belongsTo = [user:User]

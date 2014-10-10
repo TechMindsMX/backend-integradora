@@ -9,7 +9,7 @@ class Project {
   String description
   ProjectStatus status = ProjectStatus.ENABLED
 
-  Date dateCreated    
+  Date dateCreated
   Date lastUpdated
 
   static belongsTo = [user:User]
