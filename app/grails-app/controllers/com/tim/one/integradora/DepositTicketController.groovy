@@ -9,12 +9,15 @@ class DepositTicketController {
   def depositTicketService
 
   def index() {
-    log.debug "indexing"
+    User user = User.get(params.userId)
+    def depositTickets = user.depositTickets
+    render(contentType:'application/json', status:OK) {
+      depositTickets
+    }
   }
 
   @Transactional
   def save(DepositTicketCommand depositTicketCommand) {
-    log.debug "saving"
     if(depositTicketCommand.hasErrors()) {
       render(contentType:'application/json', status:BAD_REQUEST) {
         depositTicketCommand.errors

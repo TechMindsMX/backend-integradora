@@ -2,8 +2,6 @@ package com.tim.one.integradora
 
 class Ticket {
 
-  User integrated
-
   String currency
   String observations
 
