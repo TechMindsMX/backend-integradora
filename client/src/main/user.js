@@ -46,18 +46,18 @@ function User(object) {
     return promise;
   };
 
-  newObject.delete = function(user) {
-    var url = "http://localhost:8080/tim-integradora/users/" + user.id
-      var promise = new RSVP.Promise(function(resolve, reject) {
-        $.ajax({
-          method: "DELETE",
-          url:url
-        }).done(function(response, status) {
-          resolve(status);
-        }).fail(function(error){
-          reject(error);
-        })
-      });
+  newObject.delete = function() {
+    var url = "http://localhost:8080/tim-integradora/users/" + this.id;
+    var promise = new RSVP.Promise(function(resolve, reject) {
+      $.ajax({
+        method: "DELETE",
+        url:url
+      }).done(function(response, status) {
+        resolve(status);
+      }).fail(function(error){
+        reject(error);
+      })
+    });
 
     return promise;
   };

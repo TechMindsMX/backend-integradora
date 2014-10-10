@@ -25,7 +25,38 @@ function Project(object) {
     var promise = new RSVP.Promise(function(resolve, reject) {
       $.post(url, projectData).
       done(function(data) {
+        resolve(new Project(data));
+      }).fail(function(error){
+        reject(error);
+      })
+    });
+
+    return promise;
+  };
+
+  newObject.list = function() {
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/projects';
+    var promise = new RSVP.Promise(function(resolve, reject) {
+      $.getJSON(url).
+      done(function(data) {
         resolve(data);
+      }).fail(function(error){
+        reject(error);
+      })
+    });
+
+    return promise;
+  };
+
+  newObject.delete = function(user) {
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/projects/' + this.id;
+    var promise = new RSVP.Promise(function(resolve, reject) {
+      $.ajax({
+        method: "DELETE",
+        url:url
+      }).done(function(response, status) {
+        console.log(response);
+        resolve(status);
       }).fail(function(error){
         reject(error);
       })

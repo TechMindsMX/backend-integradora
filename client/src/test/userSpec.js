@@ -12,11 +12,12 @@ describe("Users behavior", function() {
 
       user.save().then(
         function(data) {
-          newUser = data; // deserialize
+          newUser = data;
           done();
         }
       );
     });
+
 
     it("Should create an user", function(done) {
       expect(newUser).not.toBe(null);
@@ -28,31 +29,6 @@ describe("Users behavior", function() {
       expect(newUser.hasOwnProperty('rfc')).toBe(true);
       expect(newUser.hasOwnProperty('id')).toBe(true);
       done();
-    });
-
-
-    describe("Project behavior", function() {
-      var newProject = {};
-
-      beforeEach(function(done) {
-        var project = new Project({
-          name: "project name",
-          user: newUser
-        });
-
-        project.save().then(
-          function(data) {
-            console.log("new project");
-            newProject = data;
-            done();
-          }
-        );
-      });
-
-      it("Should create a project for a user", function(done) {
-        expect(newProject).not.toBe(null);
-        done();
-      });
     });
   });
 
@@ -79,10 +55,9 @@ describe("Users behavior", function() {
     var newList = [new User()];
 
     beforeEach(function(done) {
-      var user = new User();
-      user.delete(newUser).then(
+      newUser.delete().then(
         function() {
-          user.list().then(
+          newUser.list().then(
             function(data) {
               newList = data.users;
               done();
