@@ -1,4 +1,4 @@
-function Project(object) {
+function Product(object) {
 
   var newObject = {};
 
@@ -20,12 +20,12 @@ function Project(object) {
   };
 
   newObject.save = function() {
-    var projectData = { name: this.name }
-    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/projects';
+    var productData = { currency: this.currency, ieps: this.ieps, iva: this.iva, name: this.name, price: this.price }
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/products';
     var promise = new RSVP.Promise(function(resolve, reject) {
-      $.post(url, projectData).
+      $.post(url, productData).
       done(function(data) {
-        resolve(new Project(data));
+        resolve(new Product(data));
       }).fail(function(error){
         reject(error);
       })
@@ -35,7 +35,7 @@ function Project(object) {
   };
 
   newObject.list = function() {
-    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/projects';
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/products';
     var promise = new RSVP.Promise(function(resolve, reject) {
       $.getJSON(url).
       done(function(data) {
@@ -48,8 +48,8 @@ function Project(object) {
     return promise;
   };
 
-  newObject.delete = function(user) {
-    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/projects/' + this.id;
+  newObject.delete = function() {
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/products/' + this.id;
     var promise = new RSVP.Promise(function(resolve, reject) {
       $.ajax({
         method: "DELETE",
@@ -63,6 +63,7 @@ function Project(object) {
 
     return promise;
   };
+
 
   return newObject;
 }

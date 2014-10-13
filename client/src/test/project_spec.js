@@ -27,6 +27,7 @@ describe("Project behavior", function() {
         }
       );
     });
+
     it("Should create a project for a user", function(done) {
       expect(project).not.toBe(null);
       done();
