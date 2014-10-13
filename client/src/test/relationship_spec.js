@@ -39,4 +39,50 @@ describe("Relationships behavior", function() {
     });
   });
 
+  describe("Relation list behavior", function(done) {
+    var partnerships = [];
+    beforeEach(function(done) {
+      partnership.list().then(
+        function(data) {
+          partnerships = data;
+          done();
+        }
+      );
+    });
+
+    it("Should list all partnerships for user", function(done) {
+      expect(partnerships.length).toBeGreaterThan(0);
+      done();
+    });
+  });
+
+  describe("Disabled behavior", function() {
+    var partnerships = [];
+
+    beforeEach(function(done) {
+      partnership.delete().then(
+        function() {
+          partnership.list().then(
+            function(data) {
+              partnerships = data;
+              done();
+            }
+          );
+        }
+      );
+    });
+
+    afterEach(function(done) {
+      var newUser = new User(partnership.integrated);
+      newUser.delete().then(function() {
+        done();
+      });
+    });
+
+    it("Should disable a product", function(done) {
+      expect(partnerships.length).toBeGreaterThan(0);
+      done();
+    });
+  });
+
 });

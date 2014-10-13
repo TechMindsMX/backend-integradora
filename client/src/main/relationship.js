@@ -34,5 +34,35 @@ function Relationship(object) {
     return promise;
   };
 
+  newObject.list = function() {
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.integrated.id + '/relationships';
+    var promise = new RSVP.Promise(function(resolve, reject) {
+      $.getJSON(url).
+      done(function(data) {
+        resolve(data);
+      }).fail(function(error){
+        reject(error);
+      })
+    });
+
+    return promise;
+  };
+
+  newObject.delete = function() {
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.integrated.id + '/relationships/' + this.relationship.id;
+    var promise = new RSVP.Promise(function(resolve, reject) {
+      $.ajax({
+        method: "DELETE",
+        url:url
+      }).done(function(response, status) {
+        resolve(status);
+      }).fail(function(error){
+        reject(error);
+      })
+    });
+
+    return promise;
+  };
+
   return newObject;
 }

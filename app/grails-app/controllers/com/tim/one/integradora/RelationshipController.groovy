@@ -17,17 +17,16 @@ class RelationshipController {
     }
   }
 
-  @Transactional
   def save(RelationshipCommand command) {
     if(command.hasErrors()) {
       respond command.errors
       return
     }
 
-    def relationship = relationshipService.createRelatioshipForIntegatedAndPartner(params.userId, command)
+    def result = relationshipService.createRelatioshipForIntegatedAndPartner(params.userId, command)
 
     render(contentType:'application/json', status:CREATED) {
-      relationship
+      result
     }
   }
 
@@ -37,6 +36,20 @@ class RelationshipController {
     render(contentType:'application/json', status:OK) {
       relationship
     }
+  }
+
+  @Transactional
+  def delete(Long id) {
+    User user = User.findByIdAndEnabled(params.userId, true)
+    if (!user){
+      render(status:404)
+      return
+    }
+    Relationship relationship = Relationship.get(id)
+    relationship.enabled = false
+    relationship.save()
+
+    render(status:202)
   }
 
 }

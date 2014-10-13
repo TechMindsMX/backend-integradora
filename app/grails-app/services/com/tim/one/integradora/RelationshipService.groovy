@@ -23,7 +23,7 @@ class RelationshipService {
     def user = User.findByIdAndEnabled(integratedId, true)
     def relationships = []
 
-    user.relationships.each { relationship ->
+    user?.relationships?.each { relationship ->
       def data = relationshipResponseFormatter(relationship, integratedId)
       relationships << data
     }
