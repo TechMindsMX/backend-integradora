@@ -12,7 +12,7 @@ describe("Relationships behavior", function() {
 
       user.save().then(
         function(data) {
-          newUser = data;
+          var newUser = data;
           var newPartnership = new Relationship({
             tradeName:'MakingDevs',
             rfc:'makingdevs012',
