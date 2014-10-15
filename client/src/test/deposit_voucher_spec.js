@@ -1,5 +1,5 @@
 describe("Deposit tickets behavior", function() {
-  var depositTicket = null;
+  var depositVoucher = null;
 
   describe("Adding new deposit ticket", function() {
     beforeEach(function(done) {
@@ -13,16 +13,16 @@ describe("Deposit tickets behavior", function() {
       user.save().then(
         function(data) {
           var newUser = data;
-          var newDepositTicket = new DepositTicket({
+          var newDepositVoucher = new DepositVoucher({
             currency:'MX',
             totalAmount:1000,
             paymentType:'CHECK',
             user: newUser
           });
 
-          newDepositTicket.save().then(
+          newDepositVoucher.save().then(
             function(data) {
-              depositTicket = data;
+              depositVoucher = data;
               done();
             }
           );
@@ -31,31 +31,31 @@ describe("Deposit tickets behavior", function() {
     });
 
     it("Should create a deposit ticket for a user", function(done) {
-      expect(depositTicket).not.toBe(null);
+      expect(depositVoucher).not.toBe(null);
       done();
     });
   });
 
   describe("Relation list behavior", function(done) {
-    var depositTickets = [];
+    var depositVouchers = [];
     beforeEach(function(done) {
-      depositTicket.list().then(
+      depositVoucher.list().then(
         function(data) {
-          depositTickets = data;
+          depositVouchers = data;
           done();
         }
       );
     });
 
     afterEach(function(done) {
-      var newUser = new User(depositTicket.user);
+      var newUser = new User(depositVoucher.detail.integrated);
       newUser.delete().then(function() {
         done();
       });
     });
 
-    it("Should list all depositTickets for user", function(done) {
-      expect(depositTickets.length).toBeGreaterThan(0);
+    it("Should list all deposit voucher for user", function(done) {
+      expect(depositVouchers.length).toBeGreaterThan(0);
       done();
     });
   });
