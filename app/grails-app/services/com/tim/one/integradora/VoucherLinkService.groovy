@@ -21,7 +21,7 @@ class VoucherLinkService {
     voucherLink.voucherDetail = voucherDetail
     voucherLink.save()
 
-    [(instance.class.simpleName):instance, detail:voucherLink]
+    [(instance.class.simpleName.toLowerCase()):instance, detail:voucherDetail]
   }
 
 }
