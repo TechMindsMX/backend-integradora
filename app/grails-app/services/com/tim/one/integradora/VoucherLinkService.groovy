@@ -9,6 +9,10 @@ class VoucherLinkService {
     User integrated = User.get(command.userId)
 
     def instance = command.instance
+    if(!Voucher.class.isAssignableFrom(instance.class)) {
+      throw new Exception("Class not implements Voucher")
+    }
+
     instance.save()
 
     def voucherLink = new VoucherLink(voucherRef: instance.id, type:instance.class.simpleName)

@@ -1,4 +1,4 @@
-import com.mymapmanager.marshaller.UserMarshaller
+import com.tim.one.integradora.UserMarshaller
 import grails.converters.JSON
 
 class BootStrap {
