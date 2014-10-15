@@ -6,6 +6,7 @@ class VoucherDetail {
   String currency
   String observations
 
+  Long folio
   BigDecimal totalAmount
 
   PaymentType paymentType = PaymentType.CHECK
@@ -15,7 +16,7 @@ class VoucherDetail {
   Date dateCreated
   Date lastUpdated
 
-  static belongsTo = [voucher : VoucherLink]
+  static belongsTo = [voucherLink : VoucherLink]
 
   static constraints = {
     currency size:1..3

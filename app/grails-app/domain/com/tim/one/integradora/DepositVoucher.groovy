@@ -3,7 +3,6 @@ package com.tim.one.integradora
 class DepositVoucher implements Voucher {
 
   String attachmentUrl
-  Long orderNumber
 
   Date dateCreated
   Date lastUpdated
