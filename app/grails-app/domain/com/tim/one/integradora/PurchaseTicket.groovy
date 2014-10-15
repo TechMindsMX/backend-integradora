@@ -4,7 +4,6 @@ class PurchaseTicket {
 
   Long folio
 
-  Ticket ticket
   User provider
   User integrated
 
