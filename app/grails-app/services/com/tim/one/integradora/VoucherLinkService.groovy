@@ -5,6 +5,22 @@ import grails.transaction.Transactional
 @Transactional
 class VoucherLinkService {
 
+  def listVouchersAndDetailsForUserAndType(userId, type) {
+
+    def voucherLinkCriteria = VoucherLink.createCriteria()
+    def vouchers = voucherLinkCriteria.list {
+      eq 'type', type
+      voucherDetail {
+        eq 'integrated', integrated
+      }
+    }
+
+    User integrated = User.get(command.userId)
+    VoucherLink.findBy
+    Long voucherRef
+    String type
+  }
+
   def saveVoucher(command) {
     User integrated = User.get(command.userId)
 

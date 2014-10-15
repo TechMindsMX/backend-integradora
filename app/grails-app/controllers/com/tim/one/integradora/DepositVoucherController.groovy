@@ -8,6 +8,7 @@ class DepositVoucherController {
 
   def voucherLinkService
 
+  //TODO cambiar esto... ya que tambien mostrara los elementos de purchase
   def index() {
     User user = User.findByIdAndEnabled(params.userId, true)
     render(contentType:'application/json', status:OK) {
