@@ -7,6 +7,9 @@ class DepositTicket {
   String attachmentUrl
   Long orderNumber // auto-increment per integrated
 
+  Date dateCreated
+  Date lastUpdated
+
   static belongsTo = [user:User]
 
   static constraints = {
