@@ -5,13 +5,18 @@ import grails.transaction.Transactional
 @Transactional
 class VoucherLinkService {
 
-  def listVouchersAndDetailsForUserAndType(userId, type) {
+  def listVouchersAndDetailsForUserAndType(userId, type, params = [:]) {
     User integrated = User.findByIdAndEnabled(userId, true)
+
     def voucherLinkCriteria = VoucherLink.createCriteria()
     def vouchers = voucherLinkCriteria.list {
       eq 'type', type
       voucherDetail {
         eq 'integrated', integrated
+        if(params) {
+          log.debug params
+          between "dateCreated", params.start, params.end
+        }
       }
     }
 
