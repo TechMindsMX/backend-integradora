@@ -11,6 +11,7 @@ class UrlMappings {
       "/products"(resources:"product")
       "/relationships"(resources:"relationship")
       "/depositVouchers"(resources:"depositVoucher")
+      "/purchaseVouchers"(resources:"purchaseVoucher")
     }
 
 

@@ -8,12 +8,9 @@ class DepositVoucherController {
 
   def voucherLinkService
 
-  //TODO cambiar esto... ya que tambien mostrara los elementos de purchase
   def index() {
     User user = User.findByIdAndEnabled(params.userId, true)
-
     def vouchers = voucherLinkService.listVouchersAndDetailsForUserAndType(user.id, 'DepositVoucher')
-
     render(contentType:'application/json', status:OK) {
       vouchers
     }
@@ -52,8 +49,7 @@ class DepositVoucherCommand {
 
   def getInstance() {
     DepositVoucher depositVoucher = new DepositVoucher()
-    depositVoucher.properties = this.properties
+    depositVoucher.attachmentUrl = this.attachmentUrl
     depositVoucher
   }
-
 }
