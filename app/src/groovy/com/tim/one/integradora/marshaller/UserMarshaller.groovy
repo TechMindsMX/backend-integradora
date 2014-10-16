@@ -1,7 +1,6 @@
-package com.mymapmanager.marshaller
+package com.tim.one.integradora
 
 import org.codehaus.groovy.grails.web.converters.marshaller.ObjectMarshaller
-import com.tim.one.integradora.User
 
 class UserMarshaller implements ObjectMarshaller {
 

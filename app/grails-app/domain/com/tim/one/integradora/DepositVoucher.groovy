@@ -1,15 +1,14 @@
 package com.tim.one.integradora
 
-class DepositTicket {
-
-  Ticket ticket
+class DepositVoucher implements Voucher {
 
   String attachmentUrl
-  Long orderNumber // auto-increment per integrated
 
-  static belongsTo = [user:User]
+  Date dateCreated
+  Date lastUpdated
 
   static constraints = {
     attachmentUrl size:1..255, nullable:true, blank: true
   }
+
 }

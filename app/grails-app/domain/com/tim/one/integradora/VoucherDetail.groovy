@@ -1,10 +1,12 @@
 package com.tim.one.integradora
 
-class Ticket {
+class VoucherDetail {
 
+  User integrated
   String currency
   String observations
 
+  Long folio
   BigDecimal totalAmount
 
   PaymentType paymentType = PaymentType.CHECK
@@ -13,6 +15,8 @@ class Ticket {
   Date paymentDate
   Date dateCreated
   Date lastUpdated
+
+  static belongsTo = [voucherLink : VoucherLink]
 
   static constraints = {
     currency size:1..3

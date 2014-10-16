@@ -1,4 +1,4 @@
-function DepositTicket(object) {
+function DepositVoucher(object) {
 
   var newObject = {};
 
@@ -20,12 +20,12 @@ function DepositTicket(object) {
   };
 
   newObject.save = function() {
-    var depositTicketData = { currency:'MX', totalAmount:1000, paymentType:'CHECK' }
-    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/depositTickets';
+    var depositVoucherData = { currency:'MX', totalAmount:1000, paymentType:'CHECK' }
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/depositVouchers';
     var promise = new RSVP.Promise(function(resolve, reject) {
-      $.post(url, depositTicketData).
+      $.post(url, depositVoucherData).
       done(function(data) {
-        resolve(new DepositTicket(data));
+        resolve(new DepositVoucher(data));
       }).fail(function(error){
         reject(error);
       })
@@ -35,7 +35,7 @@ function DepositTicket(object) {
   };
 
   newObject.list = function() {
-    var url = 'http://localhost:8080/tim-integradora/users/' + this.user.id + '/depositTickets';
+    var url = 'http://localhost:8080/tim-integradora/users/' + this.detail.integrated.id + '/depositVouchers';
     var promise = new RSVP.Promise(function(resolve, reject) {
       $.getJSON(url).
       done(function(data) {

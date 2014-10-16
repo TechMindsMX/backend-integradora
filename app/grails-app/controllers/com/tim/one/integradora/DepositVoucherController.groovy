@@ -4,48 +4,52 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional
-class DepositTicketController {
+class DepositVoucherController {
 
-  def depositTicketService
+  def voucherLinkService
 
   def index() {
-    User user = User.get(params.userId)
-    def depositTickets = user.depositTickets
+    User user = User.findByIdAndEnabled(params.userId, true)
+    def vouchers = voucherLinkService.listVouchersAndDetailsForUserAndType(user.id, 'DepositVoucher')
     render(contentType:'application/json', status:OK) {
-      depositTickets
+      vouchers
     }
   }
 
   @Transactional
-  def save(DepositTicketCommand depositTicketCommand) {
-    if(depositTicketCommand.hasErrors()) {
+  def save(DepositVoucherCommand depositVoucherCommand) {
+    if(depositVoucherCommand.hasErrors()) {
       render(contentType:'application/json', status:BAD_REQUEST) {
-        depositTicketCommand.errors
+        depositVoucherCommand.errors
       }
       return
     }
 
-    def depositTicket = depositTicketService.createDepositTicketForUser(params.userId, depositTicketCommand)
+    def results = voucherLinkService.saveVoucher(depositVoucherCommand);
     render(contentType:'application/json', status:CREATED) {
-      depositTicket
+      results
     }
-
   }
-
 }
 
-class DepositTicketCommand {
+class DepositVoucherCommand {
   String currency
   String attachmentUrl
   String observations
   BigDecimal totalAmount
   PaymentType paymentType = PaymentType.SPEI
-  User userId
+  Long userId
 
   static constraints = {
     currency size:1..3
     attachmentUrl size:1..255, nullable:true, blank: true
     observations size:1..255, nullable:true, blank:false
     totalAmount min:0.00, scale:2
+  }
+
+  def getInstance() {
+    DepositVoucher depositVoucher = new DepositVoucher()
+    depositVoucher.attachmentUrl = this.attachmentUrl
+    depositVoucher
   }
 }
