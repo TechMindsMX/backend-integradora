@@ -11,6 +11,9 @@ class DepositVoucherController {
   //TODO cambiar esto... ya que tambien mostrara los elementos de purchase
   def index() {
     User user = User.findByIdAndEnabled(params.userId, true)
+
+    log.debug voucherLinkService.listVouchersAndDetailsForUserAndType(user.id, 'DepositVoucher')
+
     render(contentType:'application/json', status:OK) {
       VoucherDetail.findAllByIntegrated(user)
     }
