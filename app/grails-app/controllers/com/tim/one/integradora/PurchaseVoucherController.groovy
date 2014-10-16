@@ -10,7 +10,15 @@ class PurchaseVoucherController {
 
   def index() {
     User user = User.findByIdAndEnabled(params.userId, true)
-    def vouchers = voucherLinkService.listVouchersAndDetailsForUserAndType(user.id, 'PurchaseVoucher')
+
+    def queryParams = [:]
+    if(params.start && params.end) {
+      queryParams.start = Date.parse('dd/MMM/yyyy', params.start)
+      queryParams.end = Date.parse('dd/MMM/yyyy', params.end)
+    }
+
+    def vouchers = voucherLinkService.listVouchersAndDetailsForUserAndType(user.id, 'PurchaseVoucher', queryParams)
+
     render(contentType:'application/json', status:OK) {
       vouchers
     }
