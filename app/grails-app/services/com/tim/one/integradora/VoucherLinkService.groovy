@@ -30,11 +30,24 @@ class VoucherLinkService {
 
     def voucherLink = new VoucherLink(voucherRef: instance.id, type:instance.class.simpleName)
     def voucherDetail = new VoucherDetail(command.properties + [integrated:integrated])
-    voucherDetail.folio = 1
+    voucherDetail.folio = calculateFolioForUserAndVoucherType(integrated, instance.class.simpleName)
     voucherLink.voucherDetail = voucherDetail
     voucherLink.save()
 
     [(instance.class.simpleName.toLowerCase()):instance, detail:voucherDetail]
+  }
+
+  private def calculateFolioForUserAndVoucherType(integrated, type) {
+    def voucherLinkCriteria = VoucherLink.createCriteria()
+    def vouchers = voucherLinkCriteria.list {
+      eq 'type', type
+      voucherDetail {
+        eq 'integrated', integrated
+      }
+    }
+
+    def lastVoucherFolio = (vouchers*.voucherDetail*.folio.max() ?: 0) + 1
+    lastVoucherFolio
   }
 
 }
