@@ -11,6 +11,8 @@ class SellOrderDetail {
   BigDecimal iva
   BigDecimal ieps
 
+  static belongsTo = [sellOrder: SellOrder]
+
   static constraints = {
     quantity min:0
     concept size:1..255

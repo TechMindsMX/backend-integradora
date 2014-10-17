@@ -3,18 +3,21 @@ package com.tim.one.integradora
 class SellOrder {
 
   User integrated
+  Project project
+
   PaymentType paymentType = PaymentType.CHECK
   Long folio
   String observations
 
   String comertialConditions
-  String placement = "Mexico, DF"
+  String placement
   BigDecimal subTotal
   BigDecimal total
 
-  static hasMany = [projects:Project, details:SellOrderDetail]
+  static hasMany = [details:SellOrderDetail]
 
   static constraints = {
+    project nullable:true
     placement size:1..255
     observations size:1..255, nullable:true, blank:false
     comertialConditions size:1..255, nullable:true, blank:false
