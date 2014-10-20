@@ -2,7 +2,6 @@ package com.tim.one.integradora
 
 class SellOrder {
 
-  User integrated
   Project project
 
   PaymentType paymentType = PaymentType.CHECK
@@ -14,6 +13,7 @@ class SellOrder {
   BigDecimal subTotal
   BigDecimal total
 
+  static belongsTo = [integrated: User]
   static hasMany = [details:SellOrderDetail]
 
   static constraints = {

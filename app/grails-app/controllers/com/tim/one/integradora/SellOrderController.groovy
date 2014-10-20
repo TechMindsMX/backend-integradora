@@ -1,13 +1,23 @@
 package com.tim.one.integradora
 
-import grails.transaction.Transactional
 import static org.springframework.http.HttpStatus.*
 
 class SellOrderController {
 
-  def index() { }
+  def sellOrderService
 
-  @Transactional
+  def index() {
+    User user = User.get(params.userId)
+    if(!user) {
+      render(status:BAD_REQUEST)
+      return
+    }
+
+    render(contentType:"application/json", status:OK) {
+      user.sellOrders
+    }
+  }
+
   def save(SellOrderCommand command) {
     if (command.hasErrors() || command.details*.validate().find { !it }){
       render(contentType:"application/json", status:BAD_REQUEST) {
@@ -16,25 +26,9 @@ class SellOrderController {
       return
     }
 
-    def sellOrder = new SellOrder()
-    sellOrder.placement = command.placement
-    sellOrder.observations = command.observations
-    sellOrder.comertialConditions = command.comertialConditions
-    sellOrder.subTotal = command.subTotal
-    sellOrder.total  = command.total
-    sellOrder.paymentType = command.paymentType
-    sellOrder.project = command.project
-    sellOrder.integrated = User.get(command.userId)
-    sellOrder.folio = 1L
+    def sellOrder = sellOrderService.saveOrderForIntegratedWithData(command.userId, command)
 
-    command.details.each { detail ->
-      def sellOrderDetail = new SellOrderDetail()
-      sellOrderDetail.properties = detail.properties
-      sellOrder.addToDetails(sellOrderDetail)
-    }
-    sellOrder.save()
-
-    render(contentType:"application/json", status:200) {
+    render(contentType:"application/json", status:CREATED) {
       sellOrder
     }
   }
