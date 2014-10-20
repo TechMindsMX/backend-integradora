@@ -6,6 +6,8 @@ class UrlMappings {
       }
     }
 
+    "/commissions"(resources:"commission")
+
     "/users"(resources:"user"){
       "/projects"(resources:"project")
       "/products"(resources:"product")

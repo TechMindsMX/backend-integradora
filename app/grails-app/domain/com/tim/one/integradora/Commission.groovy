@@ -6,7 +6,7 @@ class Commission {
 
   CommissionType type = CommissionType.TRANSACTIONAL
 
-  FrequencyTime time = FrequencyTime.WEEKLY
+  FrequencyTime frequency = FrequencyTime.WEEKLY
 
   boolean enabled = true
 
