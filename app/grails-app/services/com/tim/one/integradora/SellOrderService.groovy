@@ -25,6 +25,7 @@ class SellOrderService {
     }
 
     sellOrder.save()
+    sellOrder
   }
 
   private calculateSellOrderFolioForIntegrated(integratedId) {
